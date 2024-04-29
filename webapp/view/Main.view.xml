@@ -1,0 +1,140 @@
+<mvc:View xmlns:control="sap.gantt.control" controllerName="com.softtek.aca2024er.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" 
+    xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core">
+    <f:DynamicPage id="main" showFooter="true">
+        <f:title>
+            <f:DynamicPageTitle id="_IDGenDynamicPageTitle1">
+                <f:heading>
+                    <Text id="titulo" text="{i18n>title}" wrapping="true"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader id="_IDGenDynamicPageHeader1">
+                <fb:FilterBar showRestoreButton="false" useToolbar="false" 
+                showFilterConfiguration="false" showGoOnFB="false">
+                    <fb:filterGroupItems>
+                        <fb:FilterGroupItem name="apellido" groupName="filters" 
+                            label="Apellido del Medico" visibleInFilterBar="true">
+                            <fb:control>
+                                <Input value="{filters>/Apellido}" valueLiveUpdate="true" 
+                                liveChange="onSearch" enabled="{= !${viewModel>/hasUIchanges}}"/>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem name="nombre" groupName="filters" 
+                            label="Nombre del Medico" visibleInFilterBar="true">
+                            <fb:control>
+                                <Input value="{filters>/Nombre}" valueLiveUpdate="true" 
+                                liveChange="onSearch" enabled="{= !${viewModel>/hasUIchanges}}"/>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem name="especialidad" groupName="filters" 
+                            label="Especialidad" visibleInFilterBar="true">
+                            <fb:control>
+                                <ComboBox items="{ path: '/EspecialidadSet' }" 
+                                    selectedKey="{filters>/Especialidad}"
+                                    selectionChange="onSearch" 
+                                    enabled="{= !${viewModel>/hasUIchanges}}">
+                                    <items>
+                                        <core:Item key="{IdEspecialidad}" text="{Nombre}"/>
+                                    </items>
+                                </ComboBox>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                    </fb:filterGroupItems>
+                </fb:FilterBar>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <f:content>
+            <Table id="tablaDeMedicos" growing="true" growingThreshold="15" items="{path:'/MedicoSet'}"> 
+                <headerToolbar>
+                    <OverflowToolbar >
+                        <content>
+                            <ToolbarSpacer />
+                            <Button id="clearFilters" icon="sap-icon://clear-filter" 
+                                text="Borrar filtros" press="onClearFilters" type="Emphasized" 
+                                enabled="{= !${viewModel>/hasUIchanges}}"/>
+                            <Button id="createMedico" icon="sap-icon://add" 
+                            text="Añadir Nuevo Medico" press="onCreate" type="Accept" 
+                            enabled="{= !${viewModel>/hasUIchanges}}"/>
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column hAlign="Begin" minScreenWidth="small" demandPopin="true" width="7%">
+                        <Text text="Legajo"></Text>
+                    </Column>
+                    <Column hAlign="Center" minScreenWidth="small" demandPopin="true" width="10%">
+                        <Text text="Especialidad"></Text>
+                    </Column>
+                    <Column hAlign="Begin" minScreenWidth="small" demandPopin="true">
+                        <Text text="Nombre del Medico"></Text>
+                    </Column>
+                    <Column hAlign="Center" minScreenWidth="small" demandPopin="true">
+                        <Text text="Hora de Entrada"></Text>
+                    </Column>
+                    <Column hAlign="Center" minScreenWidth="small" demandPopin="true">
+                        <Text text="Horara de Salida"></Text>
+                    </Column>
+                    <Column hAlign="Center" minScreenWidth="small" demandPopin="true">
+                        <Text text="Acciones"></Text>
+                    </Column>
+                    
+                </columns>
+                <items>
+                    <ColumnListItem >
+                        <cells>
+                            <Text text="{Legajo}" ></Text>
+                            <Text text="{IdEspecialidad}"></Text>
+                               
+                            <!-- <ComboBox items="" 
+                                selectedKey="{IdEspecialidad}"
+                                enabled="false">
+                                <items>
+                                    <core:Item key="{IdEspecialidad}" text="{Nombre}"/>
+                                </items>
+                            </ComboBox>   -->
+                            <Text text="{Apellido}, {Nombre}"/>
+                            <TimePicker id="ingreso" displayFormat="HH:mm" change="onInputChange"
+                                value="{ 
+                                    path: 'HoraDeIngreso', 
+                                    type: 'sap.ui.model.odata.type.Time',
+                                    formatOptions: {
+                                        source: { pattern: 'PTHHHMMMSSS' },
+                                        pattern: 'HH:mm'
+                                    }
+                                }"/>
+                            <TimePicker id="egreso" displayFormat="HH:mm" change="onInputChange"
+                                value="{ 
+                                    path: 'HoraDeEgreso', 
+                                    type: 'sap.ui.model.odata.type.Time',
+                                    formatOptions: {
+                                        source: { pattern: 'PTHHHMMMSSS' },
+                                        pattern: 'HH:mm'
+                                    }
+                                }"/>
+                            <FlexBox justifyContent="SpaceBetween" alignItems="Center">
+                                <Button id="verTurnos" icon="sap-icon://activity-items" press="onVerTurnos"
+                                    type="Default" text="Ver Turnos"/>
+                                <Button id="deleteMedico" icon="sap-icon://delete" press="onDelete" 
+                                    type="Reject" text="Borrar"/>
+                            </FlexBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+        <f:footer>
+            <Text text="sdklfjslkfj"/>
+            <OverflowToolbar visible="{= ${viewModel>/hasUIchanges}}">
+                <ToolbarSpacer />
+                <Button id="save2" icon="sap-icon://add-activity-2" text="Guadar Cambios"
+                                    type="Accept" press="onSaveChanges"/>
+                <Button id="canceal" icon="sap-icon://decline" text="Cancelar"
+                                    type="Reject" press="onCancelChanges"/>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

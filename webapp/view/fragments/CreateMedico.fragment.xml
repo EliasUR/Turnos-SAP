@@ -1,0 +1,36 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    >
+    <Dialog id="createDialog" >
+        <content>
+            <form:SimpleForm id="SimpleFormDisplay480" title="Añadir Medico Nuevo" >
+                <form:content>
+                    <Label id="lbl1" text="Nombre" />
+                    <Input id="input1" value="{Medico>/Nombre}" valueLiveUpdate="true" />
+                    <Label id="lbl2" text="Apellido" />
+                    <Input id="input2" value="{Medico>/Apellido}" valueLiveUpdate="true"/>
+                    <Label id="lbl3" text="Especiabilidad" />
+                    <ComboBox items="{ path: '/EspecialidadSet' }" 
+                        selectedKey="{Medico>/IdEspecialidad}">
+                        <items>
+                            <core:Item key="{IdEspecialidad}" text="{Nombre}"/>
+                        </items>
+                    </ComboBox>
+                    <Label id="lbl4" text="Hora de ingreso" />
+                    <TimePicker displayFormat="HH:mm" value="{Medico>/HoraDeIngreso}" 
+                        valueFormat="HH:mm"/>
+                    <Label id="lbl5" text="Hora de egreso" />
+                    <TimePicker displayFormat="HH:mm" valueFormat="HH:mm" 
+                        value="{Medico>/HoraDeEgreso}"/>
+                </form:content>
+            </form:SimpleForm>
+        </content>
+        <beginButton>
+            <Button id="_IDGenButton1" type="Accept" text="Añadir Medico" press="onSaveCreate" />
+        </beginButton>
+        <endButton>
+            <Button id="_IDGenButton2" type="Reject" text="Cancelar" press="onCerrarCreate" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
