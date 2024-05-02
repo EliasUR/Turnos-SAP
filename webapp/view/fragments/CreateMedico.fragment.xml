@@ -18,11 +18,25 @@
                         </items>
                     </ComboBox>
                     <Label id="lbl4" text="Hora de ingreso" />
-                    <TimePicker displayFormat="HH:mm" value="{Medico>/HoraDeIngreso}" 
-                        valueFormat="HH:mm"/>
+                    <TimePicker id="ingreso" displayFormat="HH:mm"
+                        value="{ 
+                            path: 'Medico>/HoraDeIngreso', 
+                            type: 'sap.ui.model.odata.type.Time',
+                            formatOptions: {
+                                source: { pattern: 'PTHHHMMMSSS' },
+                                pattern: 'HH:mm'
+                            }
+                        }"/>
                     <Label id="lbl5" text="Hora de egreso" />
-                    <TimePicker displayFormat="HH:mm" valueFormat="HH:mm" 
-                        value="{Medico>/HoraDeEgreso}"/>
+                    <TimePicker id="egreso" displayFormat="HH:mm"
+                        value="{ 
+                            path: 'Medico>/HoraDeEgreso', 
+                            type: 'sap.ui.model.odata.type.Time',
+                            formatOptions: {
+                                source: { pattern: 'PTHHHMMMSSS' },
+                                pattern: 'HH:mm'
+                            }
+                        }"/>
                 </form:content>
             </form:SimpleForm>
         </content>

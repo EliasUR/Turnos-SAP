@@ -1,0 +1,21 @@
+<mvc:View xmlns:control="sap.gantt.control" controllerName="com.softtek.aca2024er.controller.SacarTurno"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f" 
+    xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt" >
+    <tnt:ToolPage >
+        <tnt:header>
+			<core:Fragment id="nav" fragmentName="com.softtek.aca2024er.view.fragments.Nav" type="XML"/>
+		</tnt:header>
+        <tnt:sideContent>
+			<core:Fragment id="sidebar" fragmentName="com.softtek.aca2024er.view.fragments.Sidebar" type="XML"/>
+        </tnt:sideContent>
+        <tnt:mainContents>
+			<NavContainer id="pageContainer" initialPage="page">
+				<pages>
+					<ScrollContainer id="page" horizontal="false" vertical="true" height="100%">
+						<Text text="Estamos en sacar turnos"/>
+					</ScrollContainer>
+				</pages>
+			</NavContainer>
+		</tnt:mainContents>
+    </tnt:ToolPage>
+</mvc:View>

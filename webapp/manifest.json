@@ -58,7 +58,7 @@
         }
     },
     "sap.ui5": {
-        "flexEnabled": true,
+        "flexEnabled": false,
         "dependencies": {
             "minUI5Version": "1.71.67",
             "libs": {
@@ -120,15 +120,57 @@
                     "target": [
                         "TargetMain"
                     ]
+                },
+                {
+                    "name": "Medicos",
+                    "pattern": "Medicos",
+                    "target": [
+                        "TargetMedicos"
+                    ]
+                },
+                {
+                    "name": "Turnos",
+                    "pattern": "Medico/{IdEspecialidad}/{LegajoMedico}",
+                    "target": [
+                        "TargetTurnos"
+                    ]
+                },
+                {
+                    "name": "SacarTurno",
+                    "pattern": "SacarTurno/{IdEspecialidad}-{LegajoMedico}",
+                    "target": [
+                        "TargetSacarTurno"
+                    ]
                 }
             ],
             "targets": {
                 "TargetMain": {
                     "viewType": "XML",
-                    "transition": "slide",
+                    "transition": "fade",
                     "clearControlAggregation": false,
                     "viewId": "Main",
                     "viewName": "Main"
+                },
+                "TargetMedicos": {
+                    "viewType": "XML",
+                    "transition": "fade",
+                    "clearControlAggregation": false,
+                    "viewId": "Medicos",
+                    "viewName": "Medicos"
+                },
+                "TargetTurnos": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "LegajoMedico",
+                    "viewName": "Turnos"
+                },
+                "TargetSacarTurno": {
+                    "viewType": "XML",
+                    "transition": "fade",
+                    "clearControlAggregation": false,
+                    "viewId": "SacarTurno",
+                    "viewName": "SacarTurno"
                 }
             }
         },

@@ -1,0 +1,142 @@
+<mvc:View xmlns:control="sap.gantt.control" controllerName="com.softtek.aca2024er.controller.Turnos"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:tnt="sap.tnt"
+    xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core">    
+
+    <tnt:ToolPage >
+        <tnt:header>
+			<core:Fragment id="nav" fragmentName="com.softtek.aca2024er.view.fragments.Nav" type="XML"/>
+		</tnt:header>
+        <tnt:sideContent>
+			<core:Fragment id="sidebar" fragmentName="com.softtek.aca2024er.view.fragments.Sidebar" type="XML"/>
+        </tnt:sideContent>
+        <tnt:mainContents>
+			<NavContainer id="pageContainer" initialPage="page">
+				<pages>
+					<ScrollContainer id="page" horizontal="false" vertical="true" height="100%">
+						<f:DynamicPage id="medicos" showFooter="true">
+        <f:title>
+            <f:DynamicPageTitle id="_IDGenDynamicPageTitle1">
+                <f:heading>
+                    <Title id="_IDGenTitle1" text="Hola {Nombre} {Apellido}, Estos son los turnos que tiene asignados."/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader id="_IDGenDynamicPageHeader1">
+                <fb:FilterBar id="_IDGenFilterBar1" showRestoreButton="false" useToolbar="false" 
+                showFilterConfiguration="false" showGoOnFB="false">
+                    <fb:filterGroupItems>
+                        <fb:FilterGroupItem id="_IDGenFilterGroupItem1" name="DniPaciente" groupName="filters" 
+                            label="DNI del Paciente" visibleInFilterBar="true">
+                            <fb:control>
+                                <Input id="_IDGenInput1" value="{filters>/Dni}" valueLiveUpdate="true" 
+                                liveChange="onSearch"/>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                    </fb:filterGroupItems>
+                    <fb:filterGroupItems>
+                        <fb:FilterGroupItem id="_IDGenFilterGroupItem2" name="FechaTurno" groupName="filters" 
+                            label="Fecha del turno" visibleInFilterBar="true">
+                            <fb:control>
+                                <DatePicker id="DP3" change="onSearch" value="{ 
+                                        path: 'filters>/Fecha', 
+                                        type: 'sap.ui.model.odata.type.Date'
+                                    }"/>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                    </fb:filterGroupItems>
+                    <fb:filterGroupItems>
+                        <fb:FilterGroupItem id="_IDGenFilterGroupItem3" name="HoraTurno" groupName="filters" 
+                            label="Hora del turno" visibleInFilterBar="true">
+                            <fb:control>
+                                <TimePicker id="ingreso" displayFormat="HH:mm" change="onSearch"
+                                    value="{ 
+                                        path: 'filters>/Hora', 
+                                        type: 'sap.ui.model.odata.type.Time',
+                                        formatOptions: { pattern: 'HH:mm' }                                        }
+                                    }"/>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                    </fb:filterGroupItems>
+                </fb:FilterBar>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <f:content>
+            <Table id="turnos" growing="true" growingThreshold="15" items="{
+                path:'ToTurnoSet'
+            }"> 
+                <headerToolbar>
+                    <OverflowToolbar id="_IDGenOverflowToolbar1" >
+                        <content>
+                            <ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+                            <Button id="clearFilters" icon="sap-icon://clear-filter" 
+                                text="Borrar filtros" press="onClearFilters" type="Emphasized"/>
+                            <Button id="createMedico" icon="sap-icon://add" 
+                            text="Asignar nuevo Turno para este Medico" press="onCreate" type="Accept"/>
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column id="_IDGenColumn1" hAlign="End" minScreenWidth="small" demandPopin="true">
+                        <Text id="_IDGenText1" text="N° Turno"></Text>
+                    </Column>
+                    <Column id="_IDGenColumn2" hAlign="Center" minScreenWidth="small" demandPopin="true">
+                        <Text id="_IDGenText2" text="Fecha del Turno"></Text>
+                    </Column>
+                    <Column id="_IDGenColumn3" hAlign="Center" minScreenWidth="small" demandPopin="true">
+                        <Text id="_IDGenText3" text="Horario del turno"></Text>
+                    </Column>
+                    <Column id="_IDGenColumn4" hAlign="End" minScreenWidth="small" demandPopin="true">
+                        <Text id="_IDGenText4" text="Dni del paciente"></Text>
+                    </Column>
+                    <Column id="_IDGenColumn5" hAlign="End" minScreenWidth="small" demandPopin="true">
+                        <Text id="_IDGenText5" text="Legajo"></Text>
+                    </Column>
+                    <Column id="_IDGenColumn6" hAlign="Center" minScreenWidth="small" demandPopin="true" width="40%">
+                        <Text id="_IDGenText6" text="Acciones"></Text>
+                    </Column>
+                    
+                </columns>
+                <items>
+                    <ColumnListItem id="_IDGenColumnListItem1" >
+                        <cells>
+                            <Text id="_IDGenText7" text="{IdTurno}"/>
+                            <Text id="_IDGenText8" text="{
+                                path: 'FechaTurno',
+                                type: 'sap.ui.model.type.Date',
+                                formatOptions: {
+                                    pattern: 'dd/MM/yyyy'
+                                }
+                            }"/>
+                            <Text id="_IDGenText9" text="{
+                                path: 'HoraTurno', 
+                                type: 'sap.ui.model.odata.type.Time',
+                                formatOptions: {
+                                    source: { pattern: 'PTHHHMMMSSS' },
+                                    pattern: 'HH:mm'
+                                }   
+                            } hs."/>
+                            <Text id="_IDGenText10" text="{DniPaciente}"/>
+                                <Text id="_IDGenText11" text="{LegajoMedico}"></Text>
+                            <!-- <Text text="{ToPaciente/Apellido}, {ToPaciente/Nombre}"/> -->
+                            <FlexBox id="_IDGenFlexBox1" justifyContent="SpaceAround" alignItems="Center">
+                                <Button id="verTurnos" icon="sap-icon://edit" press="onEdit"
+                                    type="Default" text="Reasignar Turno"/>
+                                <Button id="deleteMedico" icon="sap-icon://delete" press="onDelete" 
+                                    type="Reject" text="Quitar Turno"/>
+                            </FlexBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+					</ScrollContainer>
+				</pages>
+			</NavContainer>
+		</tnt:mainContents>
+    </tnt:ToolPage>
+    
+    
+</mvc:View>
