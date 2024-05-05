@@ -1,13 +1,18 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f">
-    <SideNavigation xmlns="sap.tnt" xmlns:core="sap.ui.core" expanded="{viewModel>/expanded}" 
-        id="sideBar" itemSelect="onItemSelect" selectedKey="{viewModel/page}" >
+    <SideNavigation xmlns="sap.tnt" xmlns:core="sap.ui.core" expanded="true"
+        id="sideBar" itemSelect="onItemSelect" selectedKey="Medicos">
         <NavigationList>
             <NavigationListItem text="Home"  key="Home" icon="home"/>
-            <NavigationListItem text="Sacar Turno" key="Nuevo Turno" icon="sap-icon://clinical-order"/>
+            <NavigationListItem text="Sacar Turno" key="NewTurno" icon="sap-icon://clinical-order"/>
             <NavigationListItem text="Todos"  key="Medicos" icon="sap-icon://doctor"/>
-            <NavigationListItem text="Ver por Especialidad" 
-                items="{/EspecialidadSet}" icon="sap-icon://accidental-leave">
-                <NavigationListItem xmlns="sap.tnt" text="{Nombre}" key="{IdEspecialidad}"/>
+            <!-- <NavigationListItem text="Ver por Especialidad" enabled="false" 
+                items="{/EspecialidadSet}" icon="sap-icon://accidental-leave"> 
+                <NavigationListItem xmlns="sap.tnt" text="{Nombre}" key="{IdEspecialidad}" enabled="true"/>
+            </NavigationListItem> -->
+            <NavigationListItem text="Ver por Especialidad" key="Especialidad" enabled="true"  icon="sap-icon://accidental-leave"> 
+                <NavigationListItem text="asd" key="1" enabled="true"/>
+                <NavigationListItem text="asd" key="2" enabled="true"/>
+                <NavigationListItem text="asd" key="3" enabled="true"/>
             </NavigationListItem>
         </NavigationList>
         <fixedItem>

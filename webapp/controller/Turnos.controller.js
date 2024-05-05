@@ -33,6 +33,19 @@ sap.ui.define([
                         }
                     });
                 }.bind(this));
+
+                var toolPage = this.byId("page");
+                var showSideBar = function() {
+                    if (window.innerWidth <= 800) {
+                        toolPage.setSideExpanded(false);
+                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", false);
+                    } else {
+                        toolPage.setSideExpanded(true);
+                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", true);
+                    }
+                }
+                showSideBar();
+                window.addEventListener("resize", showSideBar);
             },
             _oBindingChange: function (oEvent) {
                 // debugger
@@ -50,7 +63,7 @@ sap.ui.define([
             onInit: function () {
                 thisControler = this;
                 this.getRouter().getRoute("Turnos").attachPatternMatched(this._onPatternMatched, this);
-                this.loadViewModel("Detalle", false, true, false);
+                this.loadViewModel(false, true);
                 this._loadFilters();
             },
             //FILTERS

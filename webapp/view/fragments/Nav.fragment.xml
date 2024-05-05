@@ -3,10 +3,9 @@
 		<Button icon="sap-icon://nav-back" type="Transparent" press="onBack" visible="{viewModel>/backBtn}"/>
 		<Button icon="sap-icon://menu2" type="Transparent" press="onMenuButtonPress" visible="{viewModel>/menuBtn}"/>
 		<Image src="../img/logo.png" height="85%" press="onNavToHome"/>
-		<Title text="{i18n>title}" wrapping="false" class="sapUiSmallMarginEnd"/>
+		<Title text="{i18n>title}" wrapping="true" class="sapUiSmallMarginEnd"/>
 		<ToolbarSeparator />
-		<IconTabHeader id="iconTabHeader"
-			selectedKey="{viewModel>/page}"
+		<IconTabHeader id="navTabs"
 			select="onItemSelect"
 			showOverflowSelectList="true"
 			backgroundDesign="Transparent"
@@ -17,7 +16,7 @@
 					shrinkable="true" />
 			</layoutData>
 			<items>
-				<IconTabFilter text="Nuevo Turno" key="Nuevo Turno"/>
+				<IconTabFilter text="Sacar Turno" key="NewTurno"/>
 				<IconTabFilter text="Medicos" key="Medicos"/>
 			</items>
 		</IconTabHeader>

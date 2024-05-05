@@ -2,22 +2,24 @@
     xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form"
     >
-    <Dialog id="createDialog" >
+    <Dialog id="createDialog" title="Nuevo Medico">
         <content>
-            <form:SimpleForm id="SimpleFormDisplay480" title="Añadir Medico Nuevo" >
+            <form:SimpleForm>
                 <form:content>
-                    <Label id="lbl1" text="Nombre" />
-                    <Input id="input1" value="{Medico>/Nombre}" valueLiveUpdate="true" />
-                    <Label id="lbl2" text="Apellido" />
-                    <Input id="input2" value="{Medico>/Apellido}" valueLiveUpdate="true"/>
-                    <Label id="lbl3" text="Especiabilidad" />
-                    <ComboBox items="{ path: '/EspecialidadSet' }" 
+                    <Label text="Nombre" />
+                    <Input value="{Medico>/Nombre}" placeholder="ej. Pablo"
+                        valueLiveUpdate="true" />
+                    <Label text="Apellido" />
+                    <Input value="{Medico>/Apellido}" placeholder="ej. Perez"
+                        valueLiveUpdate="true"/>
+                    <Label text="Especialidad" />
+                    <ActionSelect items="{ path: '/EspecialidadSet' }" 
                         selectedKey="{Medico>/IdEspecialidad}">
                         <items>
                             <core:Item key="{IdEspecialidad}" text="{Nombre}"/>
                         </items>
-                    </ComboBox>
-                    <Label id="lbl4" text="Hora de ingreso" />
+                    </ActionSelect>
+                    <Label text="Hora de ingreso" />
                     <TimePicker id="ingreso" displayFormat="HH:mm"
                         value="{ 
                             path: 'Medico>/HoraDeIngreso', 
@@ -27,7 +29,7 @@
                                 pattern: 'HH:mm'
                             }
                         }"/>
-                    <Label id="lbl5" text="Hora de egreso" />
+                    <Label text="Hora de egreso" />
                     <TimePicker id="egreso" displayFormat="HH:mm"
                         value="{ 
                             path: 'Medico>/HoraDeEgreso', 
@@ -41,10 +43,10 @@
             </form:SimpleForm>
         </content>
         <beginButton>
-            <Button id="_IDGenButton1" type="Accept" text="Añadir Medico" press="onSaveCreate" />
+            <Button type="Accept" text="Añadir Medico" press="onSaveCreate" />
         </beginButton>
         <endButton>
-            <Button id="_IDGenButton2" type="Reject" text="Cancelar" press="onCerrarCreate" />
+            <Button type="Reject" text="Cancelar" press="onCerrarCreate" />
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

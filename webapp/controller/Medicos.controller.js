@@ -14,11 +14,11 @@ sap.ui.define([
         var thisControler;
         return BaseController.extend("com.softtek.aca2024er.controller.Medicos", {
             //Private Methods
-            _loadFilters: function () {
+            _loadFilters: function (esp) {
                 let oViewModel = new JSONModel({
                     Apellido: "",
                     Nombre: "",
-                    Especialidad: "",
+                    Especialidad: esp == "All" ? "" : esp,
                 })
                 this.getView().setModel(oViewModel,"filters")
             },           
@@ -26,12 +26,37 @@ sap.ui.define([
                 oEvent.getSource().destroy();
                 thisControler.oCreateFragment = null;
             },
+            _onPatternMatched: function (oEvent) {
+                let navId = this.getView().getDomRef().getElementsByClassName("sapMITH")[0].id
+                let iconTabHeader = this.byId(navId);
+                iconTabHeader.setSelectedKey("Medicos");
+                var toolPage = this.byId("page");
+                var showSideBar = function() {
+                    if (window.innerWidth <= 800) {
+                        toolPage.setSideExpanded(false);
+                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", false);
+                    } else {
+                        toolPage.setSideExpanded(true);
+                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", true);
+                    }
+                }
+                showSideBar();
+                window.addEventListener("resize", showSideBar);
+                let esp = oEvent.getParameter("arguments").IdEspecialidad
+                this._loadFilters(esp);
+                this.onSearch();
+                
+                let sideBarId = this.getView().getDomRef().getElementsByClassName("sapTntSideNavigation")[0].id
+                let sideBar = this.byId(sideBarId);
+                sideBar.setSelectedKey(esp == "All" ? "Medicos" : esp);
+
+            },
             
             //Public Methods for actions
             onInit: function () {
                 thisControler = this;
-                this.loadViewModel("Medicos", false, true, false);
-                this._loadFilters();
+                this.loadViewModel(false, true);
+                this.getRouter().getRoute("Medicos").attachPatternMatched(this._onPatternMatched, this);
             },
 
             //NAV TURNOS
@@ -56,8 +81,7 @@ sap.ui.define([
                 if(fNombre) {
                     aFilters.push(new Filter("Nombre", FilterOperator.Contains, fNombre))
                 }
-                if(fEspecialidad) {
-                    aFilters.push(new Filter("IdEspecialidad", FilterOperator.EQ, fEspecialidad))
+                if(fEspecialidad) {FilterOperator
                 }
                 this.getView().byId("tablaDeMedicos").getBinding("items").filter(aFilters);
             },

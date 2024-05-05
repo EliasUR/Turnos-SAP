@@ -8,11 +8,11 @@
         <tnt:mainContents>
             <VBox alignItems="Center" justifyContent="Center" alignContent="Center" height="100%">
                 <HBox >
-                    <GenericTile class="sapUiTinyMargin"
+                    <GenericTile class="sapUiTinyMargin" press="onShowLogoMessage" id="logo"
                         backgroundImage="../img/logo.png" sizeBehavior="Responsive" >
                     </GenericTile>
                     <GenericTile class="sapUiTinyMargin" sizeBehavior="Responsive"
-                        frameType="TwoByOne" >
+                        frameType="TwoByOne" press="onShowWellcomeMessage">
                         <TileContent footer="{i18n>appDescription}">
                             <FlexBox alignItems="Center" alignContent="Center">
                                 <Title text="{i18n>title}" titleStyle="H1" 
@@ -25,6 +25,16 @@
                 </HBox>
                 <HBox >
                     <GenericTile class="sapUiTinyMargin" sizeBehavior="Responsive"
+                        frameType="Auto" press="onSacarTurno">
+                        <TileContent>
+                            <VBox alignItems="Center" alignContent="Center">
+                                <Title text="Sacar Turno" titleStyle="H3" 
+                                    class="sapUiNoContentPadding No-Margins"/>
+                                <core:Icon src="sap-icon://clinical-order" size="150%" color="#354A5F"/>
+                            </VBox> 
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile class="sapUiTinyMargin" sizeBehavior="Responsive"
                         frameType="Auto" press="onVerMedicos">
                         <TileContent>
                             <VBox alignItems="Center" alignContent="Center">
@@ -34,31 +44,8 @@
                             </VBox> 
                         </TileContent>
                     </GenericTile>
-                    <GenericTile class="sapUiTinyMargin" sizeBehavior="Responsive"
-                        frameType="Auto" press="onSacarTurno">
-                        <TileContent>
-                            <VBox alignItems="Center" alignContent="Center">
-                                <Title text="Sacar Turno" titleStyle="H3" color="#354A5F" 
-                                    class="sapUiNoContentPadding No-Margins"/>
-                                <core:Icon src="sap-icon://clinical-order" size="150%" color="#354A5F"/>
-                            </VBox> 
-                        </TileContent>
-                    </GenericTile>
                 </HBox>
             </VBox>    
 		</tnt:mainContents>
     </tnt:ToolPage>
 </mvc:View>
-    <!-- <Page title="{i18n>title}" showNavButton="true" navButtonPress="onBack" showSubHeader="true">
-        <headerContent>
-            <HeaderContainer id="headerContainer">
-                <Button id="_IDGenButton1" type="Back" press="onBack"/> 
-                <Button id="_IDGenButton2" text="Home" press="onNavToHome" type="Transparent"/>
-                <Button id="_IDGenButton3" text="Ver Medicos" press="onVerMedicos" type="Transparent"/>
-                <Button id="_IDGenButton4" text="Asignar Turno" press="onSacarTurno" type="Transparent"/>
-            </HeaderContainer>
-        </headerContent>
-        <content>  
-            <Text text="Main"></Text>
-        </content>
-    </Page> -->
