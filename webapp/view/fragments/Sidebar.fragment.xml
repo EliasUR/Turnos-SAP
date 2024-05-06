@@ -5,15 +5,15 @@
             <NavigationListItem text="Home"  key="Home" icon="home"/>
             <NavigationListItem text="Sacar Turno" key="NewTurno" icon="sap-icon://clinical-order"/>
             <NavigationListItem text="Todos"  key="Medicos" icon="sap-icon://doctor"/>
-            <!-- <NavigationListItem text="Ver por Especialidad" enabled="false" 
+            <NavigationListItem text="Ver por Especialidad" enabled="true" 
                 items="{/EspecialidadSet}" icon="sap-icon://accidental-leave"> 
                 <NavigationListItem xmlns="sap.tnt" text="{Nombre}" key="{IdEspecialidad}" enabled="true"/>
-            </NavigationListItem> -->
-            <NavigationListItem text="Ver por Especialidad" key="Especialidad" enabled="true"  icon="sap-icon://accidental-leave"> 
+            </NavigationListItem>
+            <!-- <NavigationListItem text="Ver por Especialidad" key="Especialidad" enabled="true"  icon="sap-icon://accidental-leave"> 
                 <NavigationListItem text="asd" key="1" enabled="true"/>
                 <NavigationListItem text="asd" key="2" enabled="true"/>
                 <NavigationListItem text="asd" key="3" enabled="true"/>
-            </NavigationListItem>
+            </NavigationListItem> -->
         </NavigationList>
         <fixedItem>
             <NavigationList>

@@ -63,11 +63,11 @@
                             </OverflowToolbar>
                         </headerToolbar>
                         <columns>
-                            <Column hAlign="Begin" minScreenWidth="small" demandPopin="true">
-                                <Text text="Legajo"></Text>
+                            <Column mergeDuplicates="true" hAlign="Begin" minScreenWidth="small" demandPopin="true">
+                                <Text text="Especialidad"></Text>
                             </Column>
                             <Column hAlign="Begin" minScreenWidth="small" demandPopin="true">
-                                <Text text="Especialidad"></Text>
+                                <Text text="Legajo"></Text>
                             </Column>
                             <Column hAlign="Begin" minScreenWidth="small" demandPopin="true">
                                 <Text text="Nombre del Medico"></Text>

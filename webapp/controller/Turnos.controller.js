@@ -33,7 +33,6 @@ sap.ui.define([
                         }
                     });
                 }.bind(this));
-
                 var toolPage = this.byId("page");
                 var showSideBar = function() {
                     if (window.innerWidth <= 800) {
@@ -88,6 +87,36 @@ sap.ui.define([
             onClearFilters: function () {
                 this.getView().byId("turnos").getBinding("items").filter([]);
                 this._loadFilters();
+            },
+            onCreate: function (oEvent) {
+                let oContext = oEvent.getSource().getBindingContext()
+                let sEsp = oContext.getProperty("IdEspecialidad");
+                let sMed = oContext.getProperty("Legajo");
+                this.onNuevoTurno(sMed, sEsp);
+            },
+            onDelete: function (oEvent) {
+                let oContext = oEvent.getSource().getBindingContext();
+                let sPath = oContext.getPath();
+                var oDataModel = this.getOwnerComponent().getModel();
+                MessageBox.warning("Esta seguro que desea eliminar este turno", {
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if(sAction == "OK") {  
+                            oDataModel.remove(`${sPath}`, {
+                                success: function (oResponse) {
+                                    MessageToast.show("Se ha eliminado correctamente");
+                                    thisControler.getOwnerComponent().getModel().refresh(true, true);
+                                },
+                                error: function (oError) {
+                                    MessageBox.error("No puede eliminar este turno.");
+                                }
+                            });
+                        } else {
+                            MessageToast.show("Eliminacion abortada");
+                        }
+                    }
+                });
             },
         });
     });

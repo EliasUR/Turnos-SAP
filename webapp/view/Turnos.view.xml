@@ -1,7 +1,7 @@
 <mvc:View xmlns:control="sap.gantt.control" controllerName="com.softtek.aca2024er.controller.Turnos"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:tnt="sap.tnt"
     xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core">    
-    <tnt:ToolPage >
+    <tnt:ToolPage id="page">
         <tnt:header>
 			<core:Fragment id="nav" fragmentName="com.softtek.aca2024er.view.fragments.Nav" type="XML"/>
 		</tnt:header>
@@ -67,19 +67,19 @@
                                     <Button id="clearFilters" icon="sap-icon://clear-filter" 
                                         text="Borrar filtros" press="onClearFilters" type="Emphasized"/>
                                     <Button id="createMedico" icon="sap-icon://clinical-order" 
-                                    text="Nuevo Turno" press="onCreate" type="Accept"/>
+                                        text="Nuevo Turno" press="onCreate" type="Accept"/>
                                 </content>
                             </OverflowToolbar>
                         </headerToolbar>
                         <columns>
-                            <Column id="_IDGenColumn1" hAlign="End" minScreenWidth="small" demandPopin="true">
-                                <Text id="_IDGenText1" text="N° Turno"></Text>
-                            </Column>
-                            <Column id="_IDGenColumn2" hAlign="Center" minScreenWidth="small" demandPopin="true">
+                            <Column mergeDuplicates="true" id="_IDGenColumn2" hAlign="Center" minScreenWidth="small" demandPopin="true">
                                 <Text id="_IDGenText2" text="Fecha del Turno"></Text>
                             </Column>
-                            <Column id="_IDGenColumn3" hAlign="Center" minScreenWidth="small" demandPopin="true">
+                            <Column mergeDuplicates="true" id="_IDGenColumn3" hAlign="Center" minScreenWidth="small" demandPopin="true">
                                 <Text id="_IDGenText3" text="Horario del turno"></Text>
+                            </Column>
+                            <Column id="_IDGenColumn1" hAlign="End" minScreenWidth="small" demandPopin="true">
+                                <Text id="_IDGenText1" text="N° Turno"></Text>
                             </Column>
                             <Column id="_IDGenColumn4" hAlign="End" minScreenWidth="small" demandPopin="true">
                                 <Text id="_IDGenText4" text="Dni"></Text>

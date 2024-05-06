@@ -3,12 +3,14 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    'sap/ui/core/library'
+    'sap/ui/core/library',
+    "sap/m/MessageToast",
+    "sap/m/MessageBox"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (BaseController, JSONModel, Filter, FilterOperator, coreLibrary) {
+    function (BaseController, JSONModel, Filter, FilterOperator, coreLibrary, MessageToast, MessageBox) {
         "use strict";
         var thisControler;
         var ValueState = coreLibrary.ValueState;
@@ -30,19 +32,16 @@ sap.ui.define([
                 }
                 showBackBtn();
                 window.addEventListener("resize", showBackBtn);
-
                 this._setWizard(sMedico, sEsp);
             },
             _setWizard: function (medico, especialidad) {
                 var oWizard = this.byId("wizardTurnos");
+                oWizard.discardProgress(oWizard.getSteps()[0]);
                 if (medico == "Nuevo") {
-                    var oFirstStep = oWizard.getSteps()[0];
-                    oWizard.discardProgress(oFirstStep);
-                    oWizard.goToStep(oFirstStep);
+                    oWizard.goToStep(oWizard.getSteps()[0]);
                 } else {
-                    var oStep3 = oWizard.getSteps()[2];
-                    oWizard.discardProgress(oStep3);
-                    oWizard.goToStep(oStep3);
+                    oWizard.nextStep();
+                    oWizard.nextStep();
                 }
 
                 let oModel = new JSONModel({
@@ -103,6 +102,9 @@ sap.ui.define([
                 }
             },
             onSelectedDateTime: function (oEvent) {
+                let fecha = this.getView().byId("fecha").getSelectedDates()[0].getStartDate()
+                let fechaFormateada = this.formatDate(fecha);
+                this.getView().getModel("Turno").setProperty("/FechaTurno", fechaFormateada);
                 this.wizard.nextStep();
             },
             onSave: function (oEvent) {
@@ -116,8 +118,9 @@ sap.ui.define([
                         MessageToast.show("Turno Asignado Correctamente.");
                     },
                     error: function (oError) {
-                        thisControler.wizard.invalidateStep(3);
-                        thisControler.wizard.goToStep(3);
+                        let steps = thisControler.wizard.getSteps()
+                        thisControler.wizard.invalidateStep(steps[2]);
+                        thisControler.wizard.goToStep(steps[2]);
                         MessageBox.error("El horario seleccionado no está disponible, elija otro por favor.");
                     }
                 });
@@ -129,7 +132,7 @@ sap.ui.define([
                     oEspInput.focus();
                 });
                 var oMedicTile = this.byId("MedicTile");
-                var oMedicInput = this.byId("MedicInput");
+                var oMedicInput = this.byId("doctores");
                 oMedicTile.attachPress(function() {
                     oMedicInput.focus();
                 });

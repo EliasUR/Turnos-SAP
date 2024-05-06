@@ -1,12 +1,13 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/format/DateFormat"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, History, JSONModel) {
+    function (Controller, History, JSONModel, DateFormat) {
         "use strict";
         var that;
         return Controller.extend("com.softtek.aca2024er.controller.BaseController", {
@@ -18,7 +19,8 @@ sap.ui.define([
                 this.getView().setModel(oViewModel,"viewModel");
             },
             formatDate: function (date) {
-                return new Date(date + "T00:00:00");
+                var oDateFormated = DateFormat.getDateInstance({pattern: "yyyy-MM-dd"}).format(new Date(date));
+                return oDateFormated + "T00:00:00";
             },
             formatTime: function (time) {
                 let hhmm = time.split(":");
@@ -50,6 +52,9 @@ sap.ui.define([
             },
             onSacarTurno: function () {
                 this.getRouter().navTo("SacarTurno", {LegajoMedico: "Nuevo", IdEspecialidad: "Turno"});
+            },
+            onNuevoTurno: function (legajo, especialidad) {
+                this.getRouter().navTo("SacarTurno", {LegajoMedico: legajo, IdEspecialidad: especialidad});
             },
             onItemSelect: function(oEvent) {
                 var item = oEvent.getParameter('item').getKey();
