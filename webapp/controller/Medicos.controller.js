@@ -32,7 +32,7 @@ sap.ui.define([
                 iconTabHeader.setSelectedKey("Medicos");
                 var toolPage = this.byId("page");
                 var showSideBar = function() {
-                    if (window.innerWidth <= 800) {
+                    if (window.innerWidth <= 1000) {
                         toolPage.setSideExpanded(false);
                         thisControler.getView().getModel("viewModel").setProperty("/menuBtn", false);
                     } else {
@@ -145,6 +145,7 @@ sap.ui.define([
                 let medic =  oContext.getProperty("Apellido") + ", " + oContext.getProperty("Nombre");
                 var oDataModel = this.getOwnerComponent().getModel();
                 MessageBox.warning("Esta seguro que desea eliminar a " + medic, {
+                    title: "Cuidado",
                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                     emphasizedAction: MessageBox.Action.OK,
                     onClose: function (sAction) {

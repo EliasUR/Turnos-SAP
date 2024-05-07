@@ -19,8 +19,10 @@ sap.ui.define([
                 this.getView().setModel(oViewModel,"viewModel");
             },
             formatDate: function (date) {
-                var oDateFormated = DateFormat.getDateInstance({pattern: "yyyy-MM-dd"}).format(new Date(date));
-                return oDateFormated + "T00:00:00";
+                var ajustedDate = new Date(date)
+                ajustedDate.setHours(ajustedDate.getHours() + 27);
+                var oDateFormat = DateFormat.getDateTimeInstance({pattern: "yyyy-MM-dd'T'HH:mm:ss"});
+                return oDateFormat.format(ajustedDate);
             },
             formatTime: function (time) {
                 let hhmm = time.split(":");
@@ -68,8 +70,6 @@ sap.ui.define([
                         break;
                     case "Medicos": 
                         this.onVerMedicos();
-                        break;
-                    case "Especialidad": 
                         break;
                     default:
                         this.onVerMedicosEsp(item);

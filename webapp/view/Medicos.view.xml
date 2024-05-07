@@ -14,11 +14,7 @@
                 <f:title>
                     <f:DynamicPageTitle>
                         <f:heading>
-                            <HBox alignItems="Center" alignContent="Center">
-                                <Button press="onBack" type="Back" class="sapUiMediumMarginEnd"></Button>
-                                <ToolbarSpacer />
-                                <Title text="Medicos"></Title>
-                            </HBox>
+                            <Title text="Medicos"></Title>
                         </f:heading>
                     </f:DynamicPageTitle>
                 </f:title>
@@ -63,25 +59,25 @@
                             </OverflowToolbar>
                         </headerToolbar>
                         <columns>
-                            <Column mergeDuplicates="true" hAlign="Begin" minScreenWidth="small" demandPopin="true">
+                            <Column mergeDuplicates="true" hAlign="Begin" minScreenWidth="Large" demandPopin="true">
                                 <Text text="Especialidad"></Text>
                             </Column>
-                            <Column hAlign="Begin" minScreenWidth="small" demandPopin="true">
+                            <Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
                                 <Text text="Legajo"></Text>
                             </Column>
-                            <Column hAlign="Begin" minScreenWidth="small" demandPopin="true">
+                            <Column hAlign="Begin" minScreenWidth="Phone" demandPopin="true">
                                 <Text text="Nombre del Medico"></Text>
                             </Column>
-                            <Column hAlign="Center" minScreenWidth="Medium" demandPopin="false">
+                            <Column hAlign="Center" minScreenWidth="Desktop" demandPopin="true">
                                 <Text text="Horario Laboral (Desde/Hasta)"></Text>
                             </Column>
-                            <Column hAlign="Center" minScreenWidth="small" demandPopin="true">
+                            <Column hAlign="Center" minScreenWidth="XSmall" demandPopin="true">
                                 <Text text="Acciones"></Text>
                             </Column>
                             
                         </columns>
                         <items>
-                            <ColumnListItem >
+                            <ColumnListItem vAlign="Middle">
                                 <cells>
                                     <Text text="{ToEspecialidad/Nombre}"></Text>
                                     <Text text="{Legajo}" ></Text>

@@ -13,17 +13,15 @@
                 <f:title>
                     <f:DynamicPageTitle>
                         <f:heading> 
-                                <Title text="Hola {Nombre} {Apellido}, Estos son los turnos que tiene asignados."/>
-                            <!-- <HBox alignItems="Center" alignContent="Center">
-                                <Button press="onBack" type="Back" class="sapUiSmallMarginBottom"></Button>
-                            </HBox> -->
+                            <Title wrapping="true"
+                                text="Turnos asignados a {Nombre} {Apellido}."/>
                         </f:heading>
                     </f:DynamicPageTitle>
                 </f:title>
                 <f:header>
                     <f:DynamicPageHeader>
                         <Title text="Datos Personales"></Title>
-                        <HBox width="100%" justifyContent="SpaceAround" alignItems="Start" wrap="Wrap">
+                        <HBox width="100%" justifyContent="SpaceBetween" alignItems="Start" wrap="Wrap">
                             <List showSeparators="Inner">
                                 <StandardListItem title="Legajo" description="{Legajo}"/>
                                 <StandardListItem title="Nombre Completo" description="{Apellido}, {Nombre}"/>
@@ -82,37 +80,37 @@
                             </OverflowToolbar>
                         </headerToolbar>
                         <columns>
-                            <Column mergeDuplicates="true" id="_IDGenColumn2" hAlign="Center" minScreenWidth="small" demandPopin="true">
-                                <Text id="_IDGenText2" text="Fecha del Turno"></Text>
+                            <Column mergeDuplicates="true" hAlign="Begin" minScreenWidth="Phone" demandPopin="true">
+                                <Text text="Fecha del Turno"></Text>
                             </Column>
-                            <Column mergeDuplicates="true" id="_IDGenColumn3" hAlign="Center" minScreenWidth="small" demandPopin="true">
-                                <Text id="_IDGenText3" text="Horario del turno"></Text>
+                            <Column hAlign="Center" minScreenWidth="small" demandPopin="true">
+                                <Text text="Horario del turno"></Text>
                             </Column>
-                            <Column id="_IDGenColumn1" hAlign="End" minScreenWidth="small" demandPopin="true">
-                                <Text id="_IDGenText1" text="N° Turno"></Text>
+                            <Column hAlign="Center" minScreenWidth="XXLarge" demandPopin="true">
+                                <Text text="N° Turno"></Text>
                             </Column>
-                            <Column id="_IDGenColumn4" hAlign="End" minScreenWidth="small" demandPopin="true">
-                                <Text id="_IDGenText4" text="Dni"></Text>
+                            <Column hAlign="Begin" minScreenWidth="Tablet" demandPopin="true">
+                                <Text text="Dni"></Text>
                             </Column>
-                            <Column id="_IDGenColumn5" hAlign="End" minScreenWidth="small" demandPopin="true">
-                                <Text id="_IDGenText5" text="Paciente"></Text>
+                            <Column hAlign="Begin" minScreenWidth="Desktop" demandPopin="true">
+                                <Text text="Paciente"></Text>
                             </Column>
-                            <Column id="_IDGenColumn6" hAlign="Center" minScreenWidth="small" demandPopin="true">
-                                <Text id="_IDGenText6" text="Acciones"></Text>
+                            <Column hAlign="Center" minScreenWidth="XSmall" demandPopin="true">
+                                <Text text="Acciones"></Text>
                             </Column>
                             
                         </columns>
                         <items>
-                            <ColumnListItem id="_IDGenColumnListItem1" >
+                            <ColumnListItem vAlign="Middle">
                                 <cells>
-                                    <Text id="_IDGenText8" text="{
+                                    <Text text="{
                                         path: 'FechaTurno',
                                         type: 'sap.ui.model.type.Date',
                                         formatOptions: {
                                             pattern: 'dd/MM/yyyy'
                                         }
                                     }"/>
-                                    <Text id="_IDGenText9" text="{
+                                    <Text text="{
                                         path: 'HoraTurno', 
                                         type: 'sap.ui.model.odata.type.Time',
                                         formatOptions: {

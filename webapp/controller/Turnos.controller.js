@@ -35,7 +35,7 @@ sap.ui.define([
                 }.bind(this));
                 var toolPage = this.byId("page");
                 var showSideBar = function() {
-                    if (window.innerWidth <= 800) {
+                    if (window.innerWidth <= 900) {
                         toolPage.setSideExpanded(false);
                         thisControler.getView().getModel("viewModel").setProperty("/menuBtn", false);
                     } else {
@@ -46,6 +46,9 @@ sap.ui.define([
                 showSideBar();
                 window.addEventListener("resize", showSideBar);
                 this._setEditMedic();
+            },
+            _oBindingChange: function () {
+                
             },
             _loadFilters: function () {
                 let oViewModel = new JSONModel({
@@ -84,8 +87,8 @@ sap.ui.define([
                 let sPath = oContext.getPath();
                 var oDataModel = this.getOwnerComponent().getModel();
                 MessageBox.warning("Esta seguro que desea eliminar este turno", {
+                    title: "Cuidado",
                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                    emphasizedAction: MessageBox.Action.OK,
                     onClose: function (sAction) {
                         if(sAction == "OK") {  
                             oDataModel.remove(`${sPath}`, {
