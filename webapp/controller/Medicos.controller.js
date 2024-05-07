@@ -45,14 +45,13 @@ sap.ui.define([
                 let esp = oEvent.getParameter("arguments").IdEspecialidad
                 this._loadFilters(esp);
                 this.onSearch();
-                
                 let sideBarId = this.getView().getDomRef().getElementsByClassName("sapTntSideNavigation")[0].id
                 let sideBar = this.byId(sideBarId);
                 sideBar.setSelectedKey(esp == "All" ? "Medicos" : esp);
 
             },
             
-            //Public Methods for actions
+            
             onInit: function () {
                 thisControler = this;
                 this.loadViewModel(false, true);
@@ -74,14 +73,14 @@ sap.ui.define([
                 let fNombre = oModel.getProperty("/Nombre").toUpperCase();
                 let fApellido = oModel.getProperty("/Apellido").toUpperCase();
                 let fEspecialidad = oModel.getProperty("/Especialidad");  
-
                 if(fApellido) {
                     aFilters.push(new Filter("Apellido", FilterOperator.Contains, fApellido))
                 }
                 if(fNombre) {
                     aFilters.push(new Filter("Nombre", FilterOperator.Contains, fNombre))
                 }
-                if(fEspecialidad) {FilterOperator
+                if(fEspecialidad) {
+                    aFilters.push(new Filter("IdEspecialidad", FilterOperator.EQ, fEspecialidad))
                 }
                 this.getView().byId("tablaDeMedicos").getBinding("items").filter(aFilters);
             },

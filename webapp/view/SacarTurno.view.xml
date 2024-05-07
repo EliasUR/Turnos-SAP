@@ -1,13 +1,13 @@
 <mvc:View xmlns:control="sap.gantt.control" controllerName="com.softtek.aca2024er.controller.SacarTurno"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f"
     xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt" xmlns:u="sap.ui.unified" xmlns:card="sap.f.cards">
-    <tnt:ToolPage id="page">
+    <tnt:ToolPage>
         <tnt:header>
 			<core:Fragment id="nav" fragmentName="com.softtek.aca2024er.view.fragments.Nav" type="XML"/>
 		</tnt:header>
         <tnt:mainContents>
-			<Wizard id="wizardTurnos" complete="onCreateTurno" finishButtonText="Añadir Turno" 
-				showNextButton="true">
+			<Wizard id="wizardTurnos" 
+				showNextButton="false">
 				<WizardStep id="especialidad" title="Eligir Especialidad">
 					<VBox justifyContent="Center" alignItems="Center" width="100%">
 						<f:Card class="sapUiTinyMargin">

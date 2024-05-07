@@ -45,9 +45,7 @@ sap.ui.define([
                 }
                 showSideBar();
                 window.addEventListener("resize", showSideBar);
-            },
-            _oBindingChange: function (oEvent) {
-                // debugger
+                this._setEditMedic();
             },
             _loadFilters: function () {
                 let oViewModel = new JSONModel({
@@ -57,43 +55,30 @@ sap.ui.define([
                 })
                 this.getView().setModel(oViewModel,"filters")
             },
-
-             //Public Methods for actions
+            _setEditMedic: function (sPath) {
+                this.edited = {
+                    HoraDeIngreso: "",
+                    HoraDeEgreso: ""
+                }
+            },       
+            _afterCloseDialog: function (oEvent) {
+                oEvent.getSource().destroy();
+                thisControler.oEditFragment = null;
+            },
+            
             onInit: function () {
                 thisControler = this;
                 this.getRouter().getRoute("Turnos").attachPatternMatched(this._onPatternMatched, this);
                 this.loadViewModel(false, true);
-                this._loadFilters();
             },
-            //FILTERS
-            onSearch: function () {
-                let aFilters = [];
-                let oModel = this.getView().getModel("filters");
-                let fDni = oModel.getProperty("/Dni");
-                let fFecha = this.formatDate(oModel.getProperty("/Fecha"));
-                let fHora = this.formatTime(oModel.getProperty("/Hora"));  
-
-                if(fDni) {
-                    aFilters.push(new Filter("DniPaciente", FilterOperator.Contains, fDni))
-                }
-                if(fFecha) {
-                    aFilters.push(new Filter("FechaTurno", FilterOperator.EQ, fFecha))
-                }
-                if(fHora) {
-                    aFilters.push(new Filter("HoraTurno", FilterOperator.EQ, fHora))
-                }
-                this.getView().byId("turnos").getBinding("items").filter(aFilters);
-            },
-            onClearFilters: function () {
-                this.getView().byId("turnos").getBinding("items").filter([]);
-                this._loadFilters();
-            },
+            //CREATE
             onCreate: function (oEvent) {
                 let oContext = oEvent.getSource().getBindingContext()
                 let sEsp = oContext.getProperty("IdEspecialidad");
                 let sMed = oContext.getProperty("Legajo");
                 this.onNuevoTurno(sMed, sEsp);
             },
+            //DELETE
             onDelete: function (oEvent) {
                 let oContext = oEvent.getSource().getBindingContext();
                 let sPath = oContext.getPath();
@@ -118,5 +103,105 @@ sap.ui.define([
                     }
                 });
             },
+
+            //UPDATE MEDICO
+            onInputChange: function (oEvent) {
+                let oContext = oEvent.getSource().getBindingContext();
+                let timeId = oEvent.getParameter('id');
+                let timeNewValue = this.formatTime(oEvent.getParameter('newValue'));
+
+                if(timeId.includes("ingreso")){
+                    this.edited.HoraDeIngreso = timeNewValue;
+                    this.edited.HoraDeEgreso = oContext.getProperty("HoraDeEgreso");
+                }
+                else{
+                    this.edited.HoraDeEgreso = timeNewValue;
+                    this.edited.HoraDeIngreso = oContext.getProperty("HoraDeIngreso");
+                }
+
+                this.getView().byId("SaveEdit").setEnabled(true)
+                this.getView().byId("CancelEdit").setEnabled(true)
+            },
+            onSaveChanges: function (oEvent) {
+                let path = oEvent.getSource().getBindingContext().getPath();
+                let oModel = this.getView().getModel();
+                let fnSuccess = (oResponse) => {
+                    MessageToast.show("Cambios guardados correctamente");
+                    thisControler.getOwnerComponent().getModel().refresh(true, true);
+                }
+                let fnError = (error) => {
+                    MessageBox.error("No se ha podido cambiar la jornada laboral.");
+                    thisControler.onCancelChanges();
+                }
+                oModel.update(path, this.edited, {
+                    success: fnSuccess,
+                    error: fnError 
+                });
+
+                this.getView().byId("SaveEdit").setEnabled(false);
+                this.getView().byId("CancelEdit").setEnabled(false);
+                
+            },
+            onCancelChanges: function (oEvent) {
+                thisControler.getOwnerComponent().getModel().refresh(true, true);
+
+                this.getView().byId("SaveEdit").setEnabled(false);
+                this.getView().byId("CancelEdit").setEnabled(false);
+                this._setEditMedic(oEvent.getSource().getBindingContext().getPath());
+            },
+
+            //UPDATE TURNO
+            onEdit: function (oEvent) {
+                let path = oEvent.getSource().getBindingContext().getPath();
+                let hora = oEvent.getSource().getBindingContext().getProperty("HoraTurno");
+                let fecha = oEvent.getSource().getBindingContext().getProperty("FechaTurno");
+                if (!this.oEditFragment) {
+                    this.oEditFragment =
+                        sap.ui.core.Fragment.load({
+                            name: "com.softtek.aca2024er.view.fragments.EditarTurno",
+                            controller: thisControler
+                        }).then(function (oDialog) {
+                            thisControler.getView().addDependent(oDialog);
+                            let oModel = new JSONModel({
+                                path: path,
+                                HoraTurno: hora,
+                                FechaTurno: fecha
+                            });
+                            oModel.setDefaultBindingMode("TwoWay");
+                            oDialog.setModel(oModel, "Turno");
+                            oDialog.attachAfterClose(thisControler._afterCloseDialog);
+                            return oDialog;
+                        }.bind(thisControler));
+                }
+                this.oEditFragment.then(function (oDialog) {
+                    oDialog.open();
+                }.bind(thisControler));
+            },
+            onSaveTurno: function (oEvent) {
+                var oDataModel = this.getView().getModel();
+                let oEntry = oEvent.getSource().getModel("Turno").getData();
+                let path = oEntry.path;
+                let oData = {
+                    FechaTurno: this.formatDate(oEntry.FechaTurno),
+                    HoraTurno: oEntry.HoraDeEgreso
+                }
+                oDataModel.update(path, oData, {
+                    success: function (oResponse) {
+                        var result = oResponse?.results;
+                        MessageToast.show("Se ha postergado el turno correctamente");
+                        thisControler.getOwnerComponent().getModel().refresh(true, true);
+                        thisControler.onCerrarEdit();
+                    },
+                    error: function (oError) {
+                        MessageBox.error("El horario elegido no está disponible");
+                    }
+                });
+            },
+            onCerrarEdit: function (oEvent) {
+                this.oEditFragment.then(function (oDialog) {
+                    oDialog.close();
+                }.bind(this));
+            },
+            
         });
     });

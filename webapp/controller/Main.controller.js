@@ -28,7 +28,7 @@ sap.ui.define([
                 window.addEventListener("resize", showLogo);
 
             },
-            //Public Methods for actions
+            
             onInit: function () {
                 thisControler = this;
                 this.loadViewModel(false, false);

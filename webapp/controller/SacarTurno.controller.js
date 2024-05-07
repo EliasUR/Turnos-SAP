@@ -15,8 +15,7 @@ sap.ui.define([
         var thisControler;
         var ValueState = coreLibrary.ValueState;
         return BaseController.extend("com.softtek.aca2024er.controller.SacarTurno", {
-            //Private Methods
-            //Public Methods for actions
+            //private Methods
             _onPatternMatched: function (oEvent) {
                 let sMedico = oEvent.getParameter("arguments").LegajoMedico;
                 let sEsp = oEvent.getParameter("arguments").IdEspecialidad;
@@ -61,7 +60,6 @@ sap.ui.define([
                 this.loadViewModel(true, false);
                 this.wizard = this.getView().byId("wizardTurnos");
                 this.getRouter().getRoute("SacarTurno").attachPatternMatched(this._onPatternMatched, this);
-                // this.setFocusInputTiles();
             },
 
             onSelectedEsp: function (oEvent) {
@@ -123,38 +121,6 @@ sap.ui.define([
                         thisControler.wizard.goToStep(steps[2]);
                         MessageBox.error("El horario seleccionado no está disponible, elija otro por favor.");
                     }
-                });
-            },
-            setFocusInputTiles: function () {
-                var oEspTile = this.byId("EspTile");
-                var oEspInput = this.byId("EspInput");
-                oEspTile.attachPress(function() {
-                    oEspInput.focus();
-                });
-                var oMedicTile = this.byId("MedicTile");
-                var oMedicInput = this.byId("doctores");
-                oMedicTile.attachPress(function() {
-                    oMedicInput.focus();
-                });
-                var oFechaTile = this.byId("FechaTile");
-                var oFechaInput = this.byId("FechaInput");
-                oFechaTile.attachPress(function() {
-                    oFechaInput.focus();
-                });
-                var oHoraTile = this.byId("HoraTile");
-                var oHoraInput = this.byId("HoraInput");
-                oHoraTile.attachPress(function() {
-                    oHoraInput.focus();
-                });
-                var oDniTile= this.byId("DniTile");
-                var oDniInput = this.byId("DniInput");
-                oDniTile.attachPress(function() {
-                    oDniInput.focus();
-                });
-                var oNombreTile = this.byId("NombreTile");
-                var oNombreInput = this.byId("NombreInput");
-                oNombreTile.attachPress(function() {
-                    oNombreInput.focus();
                 });
             }
                 

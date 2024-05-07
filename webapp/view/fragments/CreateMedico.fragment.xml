@@ -43,10 +43,10 @@
             </form:SimpleForm>
         </content>
         <beginButton>
-            <Button type="Accept" text="Añadir Medico" press="onSaveCreate" />
+            <Button type="Accept" icon="sap-icon://accept" press="onSaveCreate" />
         </beginButton>
         <endButton>
-            <Button type="Reject" text="Cancelar" press="onCerrarCreate" />
+            <Button type="Reject" icon="sap-icon://decline" press="onCerrarCreate" />
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

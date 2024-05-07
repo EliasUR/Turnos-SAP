@@ -29,9 +29,7 @@ sap.ui.define([
             getRouter: function () {
                 return this.getOwnerComponent().getRouter();
             },
-            /**
-             * Navigates back in browser history or to the home screen
-             */
+            
             onBack: function () {
                 var oHistory = History.getInstance();
                 var oPrevHash = oHistory.getPreviousHash();
@@ -75,9 +73,6 @@ sap.ui.define([
                         break;
                     default:
                         this.onVerMedicosEsp(item);
-                        // this.getView().byId("tablaDeMedicos").getBinding("items").filter(
-                        //     new Filter("IdEspecialidad", FilterOperator.EQ, item)
-                        // );
                         break;
                 }
             },
