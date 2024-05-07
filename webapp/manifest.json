@@ -32,6 +32,7 @@
                     "semanticObject": "SisTurnos",
                     "action": "display",
                     "title": "{{flpTitle}}",
+                    "icon": "sap-icon://accidental-leave",
                     "subTitle": "{{flpSubtitle}}",
                     "signature": {
                         "parameters": {},

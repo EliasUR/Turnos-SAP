@@ -12,9 +12,13 @@ sap.ui.define([
         var that;
         return Controller.extend("com.softtek.aca2024er.controller.BaseController", {
             loadViewModel: function (back, menu) {
+                var sRootPath = jQuery.sap.getModulePath("com.softtek.aca2024er");
+                var sImagePath = sRootPath + "/img/logo.png";
+
                 const oViewModel = new JSONModel({
                     backBtn: back,
-                    menuBtn: menu
+                    menuBtn: menu,
+                    logo: sImagePath
                 });
                 this.getView().setModel(oViewModel,"viewModel");
             },

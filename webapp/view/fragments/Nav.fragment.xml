@@ -2,7 +2,7 @@
 	<tnt:ToolHeader>
 		<Button icon="sap-icon://nav-back" type="Transparent" press="onBack" visible="{viewModel>/backBtn}"/>
 		<Button icon="sap-icon://menu2" type="Transparent" press="onMenuButtonPress" visible="{viewModel>/menuBtn}"/>
-		<Image src="../img/logo.png" height="85%" press="onNavToHome"/>
+		<Image src="{viewModel>/logo}" height="85%" press="onNavToHome"/>
 		<Title text="{i18n>title}" wrapping="true" class="sapUiSmallMarginEnd"/>
 		<ToolbarSeparator />
 		<IconTabHeader id="navTabs"

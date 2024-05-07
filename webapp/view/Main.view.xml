@@ -9,7 +9,7 @@
             <VBox alignItems="Center" justifyContent="Center" alignContent="Center" height="100%">
                 <HBox >
                     <GenericTile class="sapUiTinyMargin" press="onShowLogoMessage" id="logo"
-                        backgroundImage="../img/logo.png" sizeBehavior="Responsive" >
+                        backgroundImage="{viewModel>/logo}" sizeBehavior="Responsive" >
                     </GenericTile>
                     <GenericTile class="sapUiTinyMargin" sizeBehavior="Responsive"
                         frameType="TwoByOne" press="onShowWellcomeMessage">

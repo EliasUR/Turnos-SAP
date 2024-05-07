@@ -82,7 +82,7 @@ sap.ui.define([
             onSearch: function () {
                 let aFilters = [];
                 let oModel = this.getView().getModel("filters");
-                let fDni = oModel.getProperty("/Nombre");
+                let fDni = oModel.getProperty("/Nombre").toUpperCase();
                 let fFecha = this.formatDate(oModel.getProperty("/FechaTurno"));
 
                 if(fDni) {
