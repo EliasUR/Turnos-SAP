@@ -30,18 +30,6 @@ sap.ui.define([
                 let navId = this.getView().getDomRef().getElementsByClassName("sapMITH")[0].id
                 let iconTabHeader = this.byId(navId);
                 iconTabHeader.setSelectedKey("Medicos");
-                var toolPage = this.byId("page");
-                var showSideBar = function() {
-                    if (window.innerWidth <= 1000) {
-                        toolPage.setSideExpanded(false);
-                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", false);
-                    } else {
-                        toolPage.setSideExpanded(true);
-                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", true);
-                    }
-                }
-                showSideBar();
-                window.addEventListener("resize", showSideBar);
                 let esp = oEvent.getParameter("arguments").IdEspecialidad
                 this._loadFilters(esp);
                 this.onSearch();
@@ -56,6 +44,19 @@ sap.ui.define([
                 thisControler = this;
                 this.loadViewModel(false, true);
                 this.getRouter().getRoute("Medicos").attachPatternMatched(this._onPatternMatched, this);
+                
+                var toolPage = this.byId("page");
+                var showSideBar = function() {
+                    if (window.innerWidth <= 1000) {
+                        toolPage.setSideExpanded(false);
+                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", false);
+                    } else {
+                        toolPage.setSideExpanded(true);
+                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", true);
+                    }
+                }
+                showSideBar();
+                window.addEventListener("resize", showSideBar);
             },
 
             //NAV TURNOS
@@ -82,10 +83,10 @@ sap.ui.define([
                 if(fEspecialidad) {
                     aFilters.push(new Filter("IdEspecialidad", FilterOperator.EQ, fEspecialidad))
                 }
-                this.getView().byId("tablaDeMedicos").getBinding("items").filter(aFilters);
+                this.getView().byId("tablaDeMedicos").getBinding("items").filter(aFilters, "Application");
             },
             onClearFilters: function () {
-                this.getView().byId("tablaDeMedicos").getBinding("items").filter([]);
+                this.getView().byId("tablaDeMedicos").getBinding("items").filter([], "Application");
                 this._loadFilters();
             },
            

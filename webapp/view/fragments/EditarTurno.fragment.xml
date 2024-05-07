@@ -2,7 +2,7 @@
     xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form"
     >
-    <Dialog id="createDialog" title="Postergar">
+    <Dialog id="createDialog" title="Reagendar">
         <content>
             <form:SimpleForm>
                 <form:content>

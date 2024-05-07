@@ -33,28 +33,16 @@ sap.ui.define([
                         }
                     });
                 }.bind(this));
-                var toolPage = this.byId("page");
-                var showSideBar = function() {
-                    if (window.innerWidth <= 900) {
-                        toolPage.setSideExpanded(false);
-                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", false);
-                    } else {
-                        toolPage.setSideExpanded(true);
-                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", true);
-                    }
-                }
-                showSideBar();
-                window.addEventListener("resize", showSideBar);
                 this._setEditMedic();
+                this.onClearFilters();
             },
             _oBindingChange: function () {
                 
             },
             _loadFilters: function () {
                 let oViewModel = new JSONModel({
-                    Dni: "",
-                    Fecha: "",
-                    Hora: "",
+                    Nombre: "",
+                    FechaTurno: ""
                 })
                 this.getView().setModel(oViewModel,"filters")
             },
@@ -73,7 +61,47 @@ sap.ui.define([
                 thisControler = this;
                 this.getRouter().getRoute("Turnos").attachPatternMatched(this._onPatternMatched, this);
                 this.loadViewModel(false, true);
+                this.getView().getModel("viewModel").setProperty("/Hoy", new Date());
+                this._loadFilters();
+                
+                var toolPage = this.byId("page");
+                var showSideBar = function() {
+                    if (window.innerWidth <= 900) {
+                        toolPage.setSideExpanded(false);
+                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", false);
+                    } else {
+                        toolPage.setSideExpanded(true);
+                        thisControler.getView().getModel("viewModel").setProperty("/menuBtn", true);
+                    }
+                }
+                showSideBar();
+                window.addEventListener("resize", showSideBar);
             },
+
+            //FILTERS
+            onSearch: function () {
+                let aFilters = [];
+                let oModel = this.getView().getModel("filters");
+                let fDni = oModel.getProperty("/Nombre");
+                let fFecha = this.formatDate(oModel.getProperty("/FechaTurno"));
+
+                if(fDni) {
+                    aFilters.push(new Filter("NombrePaciente", FilterOperator.Contains, fDni))
+                }
+                if(fFecha) {
+                    aFilters.push(new Filter("FechaTurno", FilterOperator.EQ, fFecha))
+                }
+                this.getView().byId("turnos").getBinding("items").filter(aFilters, "Application");
+            },
+            onClearFilters: function () {
+                this.getView().byId("turnos").getBinding("items").filter([], "Application");
+                this._loadFilters();
+            },
+            onTurnosDeHoy: function () {
+                let fFecha = this.formatDate(new Date());
+                this.getView().byId("turnos").getBinding("items").filter(new Filter("FechaTurno", FilterOperator.EQ, fFecha), "Application");
+            },
+
             //CREATE
             onCreate: function (oEvent) {
                 let oContext = oEvent.getSource().getBindingContext()
@@ -108,6 +136,20 @@ sap.ui.define([
             },
 
             //UPDATE MEDICO
+            onStartInputChange: function (oEvent) {
+                let ingreso = oEvent.getSource().getBindingContext().getProperty("HoraDeIngreso");
+                let egreso = oEvent.getSource().getBindingContext().getProperty("HoraDeEgreso");
+                let oModel = new JSONModel({
+                    HoraDeIngreso: ingreso,
+                    HoraDeEgreso: egreso
+                });
+                oModel.setDefaultBindingMode("TwoWay");
+                this.getView().setModel(oModel, "Medico");
+                this.getView().byId("horarioLabel").setVisible(false)
+                this.getView().byId("horarioBtn").setVisible(false)
+                this.getView().byId("horarioInput").setVisible(true)
+                this.getView().byId("horarioSave").setVisible(true)
+            },
             onInputChange: function (oEvent) {
                 let oContext = oEvent.getSource().getBindingContext();
                 let timeId = oEvent.getParameter('id');
@@ -121,9 +163,6 @@ sap.ui.define([
                     this.edited.HoraDeEgreso = timeNewValue;
                     this.edited.HoraDeIngreso = oContext.getProperty("HoraDeIngreso");
                 }
-
-                this.getView().byId("SaveEdit").setEnabled(true)
-                this.getView().byId("CancelEdit").setEnabled(true)
             },
             onSaveChanges: function (oEvent) {
                 let path = oEvent.getSource().getBindingContext().getPath();
@@ -140,16 +179,18 @@ sap.ui.define([
                     success: fnSuccess,
                     error: fnError 
                 });
-
-                this.getView().byId("SaveEdit").setEnabled(false);
-                this.getView().byId("CancelEdit").setEnabled(false);
+                this.getView().byId("horarioLabel").setVisible(true)
+                this.getView().byId("horarioBtn").setVisible(true)
+                this.getView().byId("horarioInput").setVisible(false)
+                this.getView().byId("horarioSave").setVisible(false)
                 
             },
             onCancelChanges: function (oEvent) {
                 thisControler.getOwnerComponent().getModel().refresh(true, true);
-
-                this.getView().byId("SaveEdit").setEnabled(false);
-                this.getView().byId("CancelEdit").setEnabled(false);
+                this.getView().byId("horarioLabel").setVisible(true)
+                this.getView().byId("horarioBtn").setVisible(true)
+                this.getView().byId("horarioInput").setVisible(false)
+                this.getView().byId("horarioSave").setVisible(false)
                 this._setEditMedic(oEvent.getSource().getBindingContext().getPath());
             },
 
